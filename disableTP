@@ -1,0 +1,5 @@
+#!/bin/bash
+line=$(xinput list | grep TouchPad)
+read num1 id num3 <<<${line//[^0-9]/ }
+
+xinput --disable $id
