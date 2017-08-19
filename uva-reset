@@ -1,0 +1,39 @@
+#!/bin/bash
+
+#simple test for a uva problem manager
+
+uvapath="/home/xrexeon/Desktop/uva"
+
+if [ ! -d $uvapath ]; then
+	echo The uva directory \($uvapath\) does not exist
+#	read -n 1 -s -r -p "Press any key to continue..."
+	exit
+fi
+
+problem=$1
+
+if [ ! -f $problem ]; then
+	echo The problem file \($problem\) does not exist
+#	read -n 1 -s -r -p "Press any key to continue..."
+	exit
+fi
+
+nameid=$2
+
+if [ -f $uvapath/$nameid.cpp ]; then
+	echo Duplicated problem found
+#	read -n 1 -s -r -p "Press any key to continue..."
+	exit
+fi
+
+
+cp -n "$problem" "$uvapath/$nameid.cpp"
+
+cp  "$uvapath/problemTemplate.cpp" "$problem"
+
+echo Successfully saved $problem as $nameid.cpp in $uvapath
+echo $problem was successfully reset from the template
+
+#read -n 1 -s -r -p "Press any key to continue..."
+
+
