@@ -1,71 +1,94 @@
+"PLUGINS:
+execute pathogen#infect()
 
-"formatting
-" use 4 spaces for tabs
-set tabstop=8
-set shiftwidth=8
+"Formatting:
+set nocompatible   " Disable vi-compatibility
+set laststatus=2   " Always show the statusline
+set encoding=utf-8 " Necessary to show Unicode glyphs
+set nowrap
+set colorcolumn=80
 
-"kde cursor
-let &t_SI = "\<Esc>]50;CursorShape=1\x7"
-let &t_SR = "\<Esc>]50;CursorShape=2\x7"
-let &t_EI = "\<Esc>]50;CursorShape=0\x7"
+let g:gruvbox_italic=1
+set background=dark    " Setting dark mode
+colorscheme gruvbox
 
-set laststatus=2
+"Line_Numbering:
+set number
+"tab
+set tabstop=4
+set shiftwidth=4
 
-"visual limit to line length
-set colorcolumn=110
-highlight ColorColumn ctermbg=darkgray
+"color and syntax
+set t_Co=256
+syntax on
+filetype plugin indent on
+set ttimeoutlen=50
+""COMMANDS:""
+command DelTrail :%s/\s\+$//e
 
-"cursor
-
+" Uncomment the following to have Vim jump to the last position when                                                       
+" reopening a file
 if has("autocmd")
-  au VimEnter,InsertLeave * silent execute '!echo -ne "\e[2 q"' | redraw!
-  au InsertEnter,InsertChange *
-	\ if v:insertmode == 'i' | 
-	\   silent execute '!echo -ne "\e[6 q"' | redraw! |
-	\ elseif v:insertmode == 'r' |
-	\   silent execute '!echo -ne "\e[4 q"' | redraw! |
-	\ endif
-  au VimLeave * silent execute '!echo -ne "\e[ q"' | redraw!
+  au BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$")
+    \| exe "normal! g'\"" | endif
 endif
 
-"mappings:
+""PLUGINS:""
+let g:SuperTabDefaultCompletionType = 'context'
+
+"tell it to use an undo file
+set undofile
+" set a directory to store the undo history
+set undodir=/home/xrexeon/.vimundo/
+
+" air-line
+let g:airline_powerline_fonts = 1
+
+if !exists('g:airline_symbols')
+	let g:airline_symbols = {}
+endif
+
+" unicode symbols
+let g:airline_symbols.paste = 'ρ'
+let g:airline_symbols.paste = 'Þ'
+let g:airline_symbols.paste = '∥'
+let g:airline_symbols.whitespace = 'Ξ'
+
+" airline symbols
+let g:airline_left_sep = ''
+let g:airline_left_alt_sep = ''
+let g:airline_right_sep = ''
+let g:airline_right_alt_sep = ''
+let g:airline_symbols.branch = ''
+let g:airline_symbols.readonly = ''
+let g:airline_symbols.linenr = ''
+
+"Mappings:
 "=========
+let mapleader = "\<Space>"
+let maplocalleader = "\<Space>"
+
 nnoremap <F3> :!clear<cr>
-"compile
-nnoremap <F4> :!g++ % -g -std=c++11<cr>
+"c++ compile
+nnoremap <F4> :w<CR> :!g++ % -o %<.x -Wall -Wextra 2>errors.err; cat errors.err<CR>
+
+"debugging 
+nnoremap <F5> :copen \| cfile errors.err<CR>
+nnoremap <Leader>n :cn<cr>
+nnoremap <Leader>p :cp<cr>
+
 "basic execution
-nnoremap <F5> :!./a.out<cr>
+nnoremap <F6> :!./%<.x<cr>
 "file input/output
-nnoremap <F6> :!./a.out < in > out<cr>
+nnoremap <F7> :!./%<.x < in > out<cr>
+"bullshit ahead:
 "solution done
-nnoremap <F7>  :w \| let $prob=expand("%d:t:r") \
-		   	\| call inputsave() \| let $nameid=input("ProblemNameProblemID: ")\
-			\| call inputrestore()<cr>\
-		     	\| :silent exec "!(uva-reset $prob $nameid&) > /tmp/vim_process"\
-			\| let $msg=system('cat /tmp/vim_process') \| redraw! \| :e $prob<cr> \| :echo $msg<cr>
- ""\|\| 
+"nnoremap <F7>  :w \| let $prob=expand("%d:t:r") \
+"			\| call inputsave() \| let $nameid=input("ProblemNameProblemID: ")\
+"			\| call inputrestore()<cr>\
+"			\| :silent exec "!(uva-reset $prob $nameid&) > /tmp/vim_process"\
+"			\| let $msg=system('cat /tmp/vim_process') \| redraw! \| :e $prob<cr> \| :echo $msg<cr>
+""\|\|
+nnoremap <F8> :UndotreeToggle<CR>
+nnoremap <F8> :UndotreeToggle<CR>
 
-
-set nocompatible              " be iMproved, required
-filetype off                  " required
-
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
-
-Plugin 'VundleVim/Vundle.vim'
-Plugin 'Valloric/YouCompleteMe'
-Plugin 'SirVer/ultisnips'
-Plugin 'itchyny/lightline.vim'
-Plugin 'Raimondi/delimitMate'
-Plugin 'vhda/verilog_systemverilog.vim'
-
-call vundle#end()            " required
-filetype plugin indent on    " required
-
-let g:ycm_key_list_select_completion=[]
-let g:ycm_key_list_previous_completion=[]
-
-let g:UltiSnipsExpandTrigger="<tab>"
-let g:UltiSnipsJumpForwardTrigger="<c-b>"
-let g:UltiSnipsJumpBackwardTrigger="<c-z>"
-let g:UltiSnipsSnippetDirectories=["bundle/ultisnips/snips"]

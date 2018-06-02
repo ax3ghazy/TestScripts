@@ -1,0 +1,8 @@
+#!/usr/bin/sh -e
+
+# Take a screenshot
+i3lock-fancy -gf Ubuntu -t "Look away." -- scrot -z
+
+# Turn the screen off after a delay.
+sleep 60; pgrep i3lock-fancy && xset dpms force off
+
