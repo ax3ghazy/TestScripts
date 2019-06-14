@@ -1,40 +1,8 @@
-#id project into your IDE of choice.ma####################################################################################################################
-#################                          Start of all the settings                                #################
-#####################################################################################################################
-#####################################################################################################################
-
-# Date    : 16/01/2018
-# Version : v6.2.8
-
-# KEY DEFINITIONS TO REMEMBER
-
-# $Mod = WINDOWS key or Super key or Mod4
-# Mod1 = ALT key
-# Control = CTRL key
-# Shift = SHIFT key
-# Escape = ESCAPE key
-# Return = ENTER or RETURN key
-# Pause = PAUSE key
-# Print = PRINT key
-# Tab = TAB key
-
-
-#####################################################################################################################
-#################                          Define the $mod variable/key                             #################
-#####################################################################################################################
 
 # Key to rule them all : Super(Windows) or Alt key?
 
-# Mod4 = Windows or Super key on keyboard
-# Mod1 = Alt key on keyboard
-
-#Set Alt key
-#set $mod Mod1
-
-#set Super key
+# Set mod key (Mod1=<Alt>, Mod4=<Super>)
 set $mod Mod4
-
-
 
 #####################################################################################################################
 #################                          Define the movements keys - variables                    #################

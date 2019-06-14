@@ -4,40 +4,40 @@
 
 uvapath="/home/xrexeon/Desktop/uva"
 
-if [ ! -d $uvapath ]; then
-	echo The uva directory \($uvapath\) does not exist
+if [ ! -d "$uvapath" ]; then
+	echo The uva directory \("$uvapath"\) does not exist
 	exit
 fi
 
 problem=$1
 
-if [ ! -f $problem ]; then
-	echo The problem file \($problem\) does not exist
+if [ ! -f "$problem" ]; then
+	echo The problem file \("$problem"\) does not exist
 	exit
 fi
 
 nameid=$2
 
-if [ -f $uvapath/$nameid.cpp ]; then
+if [ -f "$uvapath"/"$nameid".cpp ]; then
 	echo Duplicated problem found
 	exit
 fi
 
 
 cp -i "$problem" "$uvapath/$nameid.cpp" && \
-echo Successfully saved $problem as $nameid.cpp in $uvapath
+echo Successfully saved "$problem" as "$nameid".cpp in "$uvapath"
 
 read -n 1 -s -r -p "push to github?" yn
 
-if [ $yn = 'y' ]
+if [ "$yn" = "y" ]
 then
-	cd $uvapath
+	cd "$uvapath" || exit
 	git add . && \
 	git commit -m "$nameid" && \
 	git push 
 	echo Successfully git pushed
-	cd -
+	cd - || exit
 fi
 
 cp  "$uvapath/problemTemplate.cpp" "$problem" && \
-echo $problem was successfully reset from the template
+echo "$problem" was successfully reset from the template
